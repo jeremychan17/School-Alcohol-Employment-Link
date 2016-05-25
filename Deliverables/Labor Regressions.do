@@ -108,3 +108,9 @@ age male race1 race2 health higrad famsz marst1 marst3 reg1 reg2 reg4 urate, rob
 # delimit cr // change delimiter to carriage
 mfx compute
 
+* Fourth regression, controlling only for geographic differences
+# delimit ; // change delimiter to ;
+probit emp reg1 reg2 reg4 urate, robust;
+# delimit cr // change delimiter to carriage
+mfx compute
+

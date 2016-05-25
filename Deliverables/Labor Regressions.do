@@ -16,7 +16,7 @@ wdad14 == . | dadhgc == . | wmom14 == . | momhgc == . | numsib == .;
 
 // Keeps only variables of interest
 keep age sex race health higrad famsz marst afqtrev urate region wdad14 dadhgc
-wmom14 momhgc numsib drnk6m empst year;
+wmom14 momhgc numsib drnk6m empst year momwork dadwork;
 
 // Keep 1994 obs
 keep if year == 94;
@@ -83,6 +83,22 @@ label variable reg2 "North Central"
 label variable reg3 "South"
 label variable reg4 "West"
 
+// Dad's education interaction term
+gen dad_educ = wdad14*dadhgc
+label variable dad_educ "Interaction between Dad's education and living"
+
+// Mom's education interaction term
+gen mom_educ = wmom14*momhgc
+label variable mom_educ "Interaction between Mom's education and living"
+
+// Dad's employment status interaction term
+gen dad_work = wdad14*dadwork
+label variable dad_work "Interaction between Dad's employment and living"
+
+// Mom's employment status interaction term
+gen mom_work = wmom14*momwork
+label variable mom_work "Interaction between Mom's employment and living"
+
 
 * First regression, no demographics, 1994 data, regress emp on drinking
 probit emp drnk_freq1 drnk_freq2 drnk_freq3 drnk_freq4 drnk_freq5 drnk_freq6, robust
@@ -98,7 +114,8 @@ mfx compute
 * Third regression, controlling for individual differences and geographic area
 # delimit ; // change delimiter to ;
 probit emp drnk_freq1 drnk_freq2 drnk_freq3 drnk_freq4 drnk_freq5 drnk_freq6
-age male race1 race2 health higrad famsz marst1 marst3 reg1 reg2 reg4 urate, robust;
+age male race1 race2 health higrad famsz marst1 marst3 reg1 reg2 reg4 urate,
+robust;
 # delimit cr // change delimiter to carriage
 mfx compute
 
@@ -108,6 +125,13 @@ probit emp drnk_freq1 drnk_freq2 drnk_freq3 drnk_freq4 drnk_freq5 drnk_freq6
 reg1 reg2 reg4 urate, robust;
 # delimit cr // change delimiter to carriage
 mfx compute
+
+* Fifth regression, controlling for individual, geographic, and fam hist demo.
+# delimit ' // change delimiter to ;
+probit emp drnk_freq1 drnk_freq2 drnk_freq3 drnk_freq4 drnk_freq5 drnk_freq6
+age male race1 race2 health higrad famsz marst1 marst3 reg1 reg2 reg4 urate
+, robust;
+# delimit cr // change delimiter to carriage
 
 * Graphs
 hist drnk6m

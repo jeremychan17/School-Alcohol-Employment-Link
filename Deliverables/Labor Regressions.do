@@ -130,7 +130,7 @@ mfx compute
 # delimit ' // change delimiter to ;
 probit emp drnk_freq1 drnk_freq2 drnk_freq3 drnk_freq4 drnk_freq5 drnk_freq6
 age male race1 race2 health higrad famsz marst1 marst3 reg1 reg2 reg4 urate
-, robust;
+dad_educ mom_educ dad_work mom_work,robust;
 # delimit cr // change delimiter to carriage
 
 * Graphs

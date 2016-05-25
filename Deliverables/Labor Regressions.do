@@ -28,8 +28,7 @@ keep if year == 94;
 // No active in armed forces, create dummy variable 1 if employed, 2 otherwise
 // Labor Variable
 gen emp = 0
-replace emp = 1 if empst == 1
-drop empst
+replace emp = 1 if empst == 1 | empst == 2
 label variable emp "1 if employed"
 
 // Alcohol Variable
@@ -43,19 +42,19 @@ rename drnk_freq2 drnk_freq1
 label variable drnk_freq1 "1 time"
 
 rename drnk_freq3 drnk_freq2
-label variable drnk_freq2 "2 times"
+label variable drnk_freq2 "2 or 3 times"
 
 rename drnk_freq4 drnk_freq3
-label variable drnk_freq3 "3 times"
+label variable drnk_freq3 "4 or 5 times"
 
 rename drnk_freq5 drnk_freq4
-label variable drnk_freq4 "4 times"
+label variable drnk_freq4 "6 or 7 times"
 
 rename drnk_freq6 drnk_freq5
-label variable drnk_freq5 "5 times"
+label variable drnk_freq5 "8 or 9 times"
 
 rename drnk_freq7 drnk_freq6
-label variable drnk_freq6 "6 times"
+label variable drnk_freq6 "10 or more times"
 
 // Male: use male as default
 gen male = 0
@@ -107,7 +106,7 @@ mfx compute
 * Second regression, controlling for individual differences
 # delimit ; // change delimiter to ;
 probit emp drnk_freq1 drnk_freq2 drnk_freq3 drnk_freq4 drnk_freq5 drnk_freq6
-age male race1 race2 health higrad famsz marst1 marst3, robust;
+age male race1 race2 health higrad famsz marst1 marst3 afqtrev, robust;
 # delimit cr // change delimiter to carriage
 mfx compute
 
@@ -115,28 +114,23 @@ mfx compute
 # delimit ; // change delimiter to ;
 probit emp drnk_freq1 drnk_freq2 drnk_freq3 drnk_freq4 drnk_freq5 drnk_freq6
 age male race1 race2 health higrad famsz marst1 marst3 reg1 reg2 reg4 urate,
-robust;
+robust afqtrev;
 # delimit cr // change delimiter to carriage
 mfx compute
 
-* Fourth regression, controlling only for geographic differences
-# delimit ; // change delimiter to ;
-probit emp drnk_freq1 drnk_freq2 drnk_freq3 drnk_freq4 drnk_freq5 drnk_freq6
-reg1 reg2 reg4 urate, robust;
-# delimit cr // change delimiter to carriage
-mfx compute
-
-* Fifth regression, controlling for individual, geographic, and fam hist demo.
+* Fourth regression, controlling for individual, geographic, and fam hist demo.
 # delimit ' // change delimiter to ;
 probit emp drnk_freq1 drnk_freq2 drnk_freq3 drnk_freq4 drnk_freq5 drnk_freq6
-age male race1 race2 health higrad famsz marst1 marst3 reg1 reg2 reg4 urate
+age male race1 race2 health higrad famsz marst1 marst3 afqtrev 
+reg1 reg2 reg4 urate
 dad_educ mom_educ dad_work mom_work,robust;
 # delimit cr // change delimiter to carriage
 
 * create confusion matrix of accurate predictions
 # delimit ' // change delimiter to ;
 probit emp drnk_freq1 drnk_freq2 drnk_freq3 drnk_freq4 drnk_freq5 drnk_freq6
-age male race1 race2 health higrad famsz marst1 marst3 reg1 reg2 reg4 urate
+age male race1 race2 health higrad famsz marst1 marst3 afqtrev 
+reg1 reg2 reg4 urate
 dad_educ mom_educ dad_work mom_work,robust;
 # delimit cr // change delimiter to carriage
 predict phat2

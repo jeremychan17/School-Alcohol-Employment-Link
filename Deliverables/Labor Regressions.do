@@ -108,3 +108,6 @@ probit emp reg1 reg2 reg4 urate, robust;
 # delimit cr // change delimiter to carriage
 mfx compute
 
+* Graphs
+hist drnk6m
+

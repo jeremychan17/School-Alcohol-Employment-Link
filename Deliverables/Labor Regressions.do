@@ -1,6 +1,6 @@
 // Loading Data
 // Loading on Mac
-use "/Users/Jeremy/Documents/GitHub/School-Alcohol-Income-Link/Dataset/alcohol.dta", clear
+use "/Users/Jeremy/Documents/GitHub/School-Alcohol-Employment-Link/Dataset/alcohol.dta", clear
 
 // Loading on PC
 // Fill later

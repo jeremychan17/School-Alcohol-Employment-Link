@@ -101,5 +101,10 @@ age male race1 race2 health higrad famsz marst1 marst3, robust;
 # delimit cr // change delimiter to carriage
 mfx compute
 
-
+* Third regression, controlling for individual differences and geographic area
+# delimit ; // change delimiter to ;
+probit emp drnk_freq1 drnk_freq2 drnk_freq3 drnk_freq4 drnk_freq5 drnk_freq6
+age male race1 race2 health higrad famsz marst1 marst3 reg1 reg2 reg4 urate, robust;
+# delimit cr // change delimiter to carriage
+mfx compute
 

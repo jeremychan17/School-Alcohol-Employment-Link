@@ -3,7 +3,7 @@
 use "/Users/Jeremy/Documents/GitHub/School-Alcohol-Employment-Link/Dataset/alcohol.dta", clear
 
 // Loading on PC
-// Fill later
+use "C:\Users\Jeremy\Dropbox\Documents\GitHub\School-Alcohol-Employment-Link\Dataset\alcohol.dta", clear
 
 * Cleaning data
 

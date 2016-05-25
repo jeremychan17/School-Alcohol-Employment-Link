@@ -61,7 +61,7 @@ drop drnk6m
 
 // Male: use male as default
 gen male = 0
-replace male = 1 if sex 1
+replace male = 1 if sex == 1
 label variable male "1 if male"
 drop sex
 
@@ -92,3 +92,14 @@ drop region
 
 * First regression, no demographics, 1994 data, regress emp on drinking
 probit emp drnk_freq1 drnk_freq2 drnk_freq3 drnk_freq4 drnk_freq5 drnk_freq6, robust
+mfx compute
+
+* Second regression, controlling for individual differences
+# delimit ; // change delimiter to ;
+probit emp drnk_freq1 drnk_freq2 drnk_freq3 drnk_freq4 drnk_freq5 drnk_freq6
+age male race1 race2 health higrad famsz marst1 marst3, robust;
+# delimit cr // change delimiter to carriage
+mfx compute
+
+
+

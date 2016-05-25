@@ -57,13 +57,10 @@ label variable drnk_freq5 "5 times"
 rename drnk_freq7 drnk_freq6
 label variable drnk_freq6 "6 times"
 
-drop drnk6m
-
 // Male: use male as default
 gen male = 0
 replace male = 1 if sex == 1
 label variable male "1 if male"
-drop sex
 
 // Race: Use other as default
 rename race race_temp
@@ -71,7 +68,6 @@ tab race_temp, gen(race)
 label variable race1 "Hispanic"
 label variable race2 "Black"
 label variable race3 "Other"
-drop race_temp
 
 // Marital status: use marst2 as default
 rename marst marst_temp
@@ -79,7 +75,6 @@ tab marst_temp, gen(marst)
 label variable marst1 "Never married"
 label variable marst2 "Married with spouse present"
 label variable marst3 "Other"
-drop marst_temp
 
 // Region: use region 3 (South) as default
 tab region, gen(reg)
@@ -87,7 +82,6 @@ label variable reg1 "Northeast"
 label variable reg2 "North Central"
 label variable reg3 "South"
 label variable reg4 "West"
-drop region
 
 
 * First regression, no demographics, 1994 data, regress emp on drinking

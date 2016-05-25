@@ -104,7 +104,8 @@ mfx compute
 
 * Fourth regression, controlling only for geographic differences
 # delimit ; // change delimiter to ;
-probit emp reg1 reg2 reg4 urate, robust;
+probit emp drnk_freq1 drnk_freq2 drnk_freq3 drnk_freq4 drnk_freq5 drnk_freq6
+reg1 reg2 reg4 urate, robust;
 # delimit cr // change delimiter to carriage
 mfx compute
 

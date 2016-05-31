@@ -102,6 +102,11 @@ label variable mom_work "Interaction between Mom's employment and living"
 * First regression, no demographics, 1994 data, regress emp on drinking
 probit emp drnk_freq1 drnk_freq2 drnk_freq3 drnk_freq4 drnk_freq5 drnk_freq6, robust
 mfx compute
+predict phat1
+gen pred1 = 0
+replace pred1 = 1 if phat1 >= .5
+tab pred1 emp
+
 
 * Second regression, controlling for individual differences
 # delimit ; // change delimiter to ;
@@ -109,6 +114,11 @@ probit emp drnk_freq1 drnk_freq2 drnk_freq3 drnk_freq4 drnk_freq5 drnk_freq6
 age male race1 race2 health higrad famsz marst1 marst3 afqtrev, robust;
 # delimit cr // change delimiter to carriage
 mfx compute
+predict phat2
+gen pred2 = 0
+replace pred2 = 1 if phat2 >= .5
+tab pred2 emp
+
 
 * Third regression, controlling for individual differences and geographic area
 # delimit ; // change delimiter to ;
@@ -117,6 +127,10 @@ age male race1 race2 health higrad famsz marst1 marst3 reg1 reg2 reg4 urate afqt
 robust;
 # delimit cr // change delimiter to carriage
 mfx compute
+predict phat3
+gen pred3 = 0
+replace pred3 = 1 if phat3 >= .5
+tab pred3 emp
 
 * Fourth regression, controlling for individual, geographic, and fam hist demo.
 # delimit ' // change delimiter to ;
@@ -125,6 +139,10 @@ age male race1 race2 health higrad famsz marst1 marst3 afqtrev
 reg1 reg2 reg4 urate
 dad_educ mom_educ dad_work mom_work,robust;
 # delimit cr // change delimiter to carriage
+predict phat4
+gen pred4 = 0
+replace pred4 = 1 if phat4 >= .5
+tab pred4 emp
 
 * create confusion matrix of accurate predictions
 # delimit ; // change delimiter to ;
